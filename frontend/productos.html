@@ -1,0 +1,1759 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VitalPet - Tienda de Productos</title>
+    
+    <style>
+  /* =========================
+     RESET + BASE
+  ========================= */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(to bottom, #a8d5d8 0%, #7ec5c9 100%);
+    min-height: 100vh;
+  }
+
+  /* =========================
+     NAVBAR
+  ========================= */
+  .nav-container {
+    background-color: white;
+    border-radius: 30px;
+    padding: 10px 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 800px;
+    margin: 50px auto;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 1px;
+    z-index: 999;
+  }
+
+  .logo-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo-icon {
+    width: 120px;
+    height: 120px;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+  }
+
+  /* Link navbar */
+  .id1 {
+    text-decoration: none;
+    color: #333;
+    font-size: 17px;
+    font-weight: 500;
+  }
+
+  .cta-button {
+    background-color: #ff6b35;
+    color: white;
+    padding: 8px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  /* =========================
+     CATEGORIES
+  ========================= */
+  .categories-section {
+    background-color: rgba(94, 154, 159, 0.6);
+    padding: 25px 20px;
+    margin-bottom: 30px;
+  }
+
+  .categories-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+    margin-bottom: 20px;
+  }
+
+  .category-tab h2 {
+    color: white;
+    font-size: 28px;
+    font-weight: 400;
+    cursor: pointer;
+    padding-bottom: 10px;
+  }
+
+  .category-tab.active h2 {
+    border-bottom: 3px solid white;
+  }
+
+  /* Link titulo Perros / Gatos */
+  .id2 {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 40px;
+    font-weight: 500;
+  }
+
+  .subcategories {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 15px;
+  }
+
+  .subcategory-link {
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    cursor: pointer;
+    transition: opacity 0.3s;
+  }
+
+  .subcategory-link:hover {
+    opacity: 0.8;
+  }
+
+  /* Botón categoría activa */
+  .active-category-btn {
+    background-color: #5e9a9f;
+    color: white;
+    padding: 12px 40px;
+    border-radius: 30px;
+    font-size: 22px;
+    font-weight: 400;
+    border: none;
+    margin: 25px auto;
+    display: block;
+    cursor: pointer;
+  }
+
+  /* =========================
+     SEPARADOR + TITULO
+  ========================= */
+  .separator {
+    height: 2px;
+    background-color: rgba(255, 255, 255, 0.3);
+    max-width: 900px;
+    margin: 30px auto;
+  }
+
+  .section-title {
+    text-align: center;
+    color: white;
+    font-size: 35px;
+    font-weight: 300;
+    margin: 30px 0;
+    text-transform: lowercase;
+  }
+
+  /* =========================
+     PRODUCTS GRID
+  ========================= */
+  .products-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px 40px;
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  .product-card {
+    background-color: white;
+    border-radius: 25px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+  }
+
+  .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  }
+
+  .product-image {
+    width: 100%;
+    height: 180px;
+    object-fit: contain;
+    margin-bottom: 15px;
+  }
+
+  .product-name {
+    color: #c2185b;
+    font-size: 13px;
+    line-height: 1.4;
+    margin-bottom: 12px;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .product-price {
+    color: #1e3a5f;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  /* =========================
+     FOOTER
+  ========================= */
+  .footer {
+    background-color: #f5f5f5;
+    padding: 40px 20px;
+    border-top: 1px solid #e0e0e0;
+  }
+
+  .footer-content {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .footer-title {
+    text-align: center;
+    color: #2c2c2c;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    font-size: 12px;
+    color: #666;
+  }
+
+  .footer-column h4 {
+    color: #2c2c2c;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .footer-column p,
+  .footer-column a {
+    color: #666;
+    text-decoration: none;
+    line-height: 1.8;
+    display: block;
+  }
+
+  .footer-logo {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .footer-logo-text {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1e3a5f;
+  }
+
+  /* =========================
+     PRODUCT MODAL
+  ========================= */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal-overlay.active {
+    display: flex;
+  }
+
+  .modal-content {
+    background-color: white;
+    border-radius: 15px;
+    padding: 40px;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    text-align: center;
+  }
+
+  .modal-image {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    margin: 0 auto 20px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    padding: 10px;
+  }
+
+  .modal-title {
+    color: #c2185b;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    line-height: 1.4;
+  }
+
+  .modal-price {
+    color: #1e3a5f;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 30px;
+  }
+
+  .modal-buttons {
+    display: flex;
+    gap: 15px;
+    flex-direction: column;
+  }
+
+  .modal-btn {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .modal-btn-buy {
+    background-color: #8b4651;
+    color: white;
+  }
+
+  .modal-btn-buy:hover {
+    background-color: #6d3540;
+  }
+
+  .modal-btn-cart {
+    background-color: #5e9a9f;
+    color: white;
+  }
+
+  .modal-btn-cart:hover {
+    background-color: #4a7a80;
+  }
+
+  .modal-btn-close {
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ddd;
+  }
+
+  .modal-btn-close:hover {
+    background-color: #e0e0e0;
+  }
+
+  /* =========================
+     PAYMENT MODAL
+  ========================= */
+  .payment-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .payment-modal.active {
+    display: flex;
+  }
+
+  .payment-modal-content {
+    background-color: white;
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  .payment-modal-title {
+    color: #2d7b5f;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+
+  .payment-form-group {
+    margin-bottom: 20px;
+  }
+
+  .payment-form-group label {
+    display: block;
+    color: #333;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .payment-form-group input,
+  .payment-form-group select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+  }
+
+  .payment-form-group input:focus,
+  .payment-form-group select:focus {
+    outline: none;
+    border-color: #2d7b5f;
+    box-shadow: 0 0 0 3px rgba(45, 123, 95, 0.1);
+  }
+
+  .payment-methods {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+
+  .payment-method-btn {
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    background-color: white;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .payment-method-btn:hover {
+    border-color: #2d7b5f;
+    background-color: #f0faf8;
+  }
+
+  .payment-method-btn.active {
+    border-color: #2d7b5f;
+    background-color: #2d7b5f;
+    color: white;
+  }
+
+  .payment-summary {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-left: 4px solid #2d7b5f;
+  }
+
+  .payment-summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+
+  .payment-summary-row:last-child {
+    margin-bottom: 0;
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+    font-weight: 700;
+    color: #2d7b5f;
+  }
+
+  .payment-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+  }
+
+  .payment-btn {
+    flex: 1;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .payment-btn-primary {
+    background-color: #2d7b5f;
+    color: white;
+  }
+
+  .payment-btn-primary:hover {
+    background-color: #1f5741;
+    transform: translateY(-2px);
+  }
+
+  .payment-btn-secondary {
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ddd;
+  }
+
+  .payment-btn-secondary:hover {
+    background-color: #e0e0e0;
+  }
+
+  /* =========================
+     CART SIDEBAR
+  ========================= */
+  .cart-sidebar {
+    position: fixed;
+    right: -400px;
+    top: 0;
+    width: 400px;
+    height: 100vh;
+    background-color: white;
+    box-shadow: -2px 0 15px rgba(0, 0, 0, 0.2);
+    z-index: 900;
+    transition: right 0.3s ease;
+    overflow-y: auto;
+    padding: 20px;
+  }
+
+  .cart-sidebar.active {
+    right: 0;
+  }
+
+  .sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e0e0e0;
+  }
+
+  .sidebar-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1e3a5f;
+  }
+
+  .sidebar-close {
+    background-color: transparent;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #666;
+  }
+
+  .sidebar-items {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+
+  .sidebar-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    align-items: flex-start;
+  }
+
+  .sidebar-item-image {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    background-color: white;
+    border-radius: 5px;
+    padding: 5px;
+    flex-shrink: 0;
+  }
+
+  .sidebar-item-info {
+    flex: 1;
+  }
+
+  .sidebar-item-name {
+    font-size: 13px;
+    color: #c2185b;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 5px;
+  }
+
+  .sidebar-item-price {
+    font-size: 15px;
+    color: #333;
+    font-weight: 700;
+  }
+
+  .sidebar-item-remove {
+    background-color: transparent;
+    border: none;
+    color: #ff6b35;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 0;
+    align-self: flex-start;
+  }
+
+  .sidebar-empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: #999;
+  }
+
+  .sidebar-footer {
+    position: sticky;
+    bottom: 0;
+    background-color: white;
+    padding-top: 15px;
+    border-top: 2px solid #e0e0e0;
+  }
+
+  .sidebar-total {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #1e3a5f;
+  }
+
+  .sidebar-checkout {
+    width: 100%;
+    padding: 12px;
+    background-color: #8b4651;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .sidebar-checkout:hover {
+    background-color: #6d3540;
+  }
+
+  /* =========================
+     CART ICON
+  ========================= */
+  .cart-icon-wrapper {
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .cart-icon {
+    font-size: 24px;
+    color: #333;
+    transition: transform 0.3s;
+  }
+
+  .cart-icon-wrapper:hover .cart-icon {
+    transform: scale(1.1);
+  }
+
+  .cart-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: #dc3545;
+    color: white;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    border: 2px solid white;
+  }
+
+  /* =========================
+     USER PROFILE
+  ========================= */
+  .user-profile-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .user-profile-icon {
+    width: 40px;
+    height: 40px;
+    background-color: #4fc3f7;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border: 2px solid #29b6f6;
+  }
+
+  .user-profile-icon:hover {
+    background-color: #29b6f6;
+  }
+
+  .profile-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    min-width: 200px;
+    display: none;
+    z-index: 1000;
+    margin-top: 10px;
+  }
+
+  .profile-dropdown.active {
+    display: block;
+  }
+
+  .profile-dropdown-item {
+    padding: 12px 20px;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .profile-dropdown-item:hover {
+    background-color: #f5f5f5;
+  }
+
+  .profile-dropdown-item:first-child {
+    border-bottom: 1px solid #eee;
+  }
+
+  /* =========================
+     RESPONSIVE
+  ========================= */
+  @media (max-width: 1024px) {
+    .products-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .categories-tabs {
+      gap: 50px;
+    }
+
+    .subcategories {
+      gap: 20px;
+      font-size: 14px;
+    }
+
+    .products-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .nav-container {
+      padding: 15px 20px;
+    }
+
+    .nav-links {
+      gap: 15px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .products-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .categories-tabs {
+      flex-direction: column;
+      gap: 20px;
+    }
+  }
+</style>
+
+</head>
+<body>
+    <!-- Navegación -->
+    <div class="nav-container">
+        <div class="logo-section">
+            <div class="logo-icon"><img src="img/logo.jpeg" alt="VitalPet Logo"></div>
+        </div>
+
+        <div class="nav-links">
+            <a href="inicio.html" class="id1">inicio</a>
+            <a href="servicios.html" class="id1">servicios</a>
+            <a href="calendario.html" class="id1 cta-button">Agenda Tu Cita</a>
+            <a id="nav-login" href="login.html" class="id1">iniciar sesión</a>
+
+            <div id="user-profile" class="user-profile-container" style="display: none;">
+                <div class="user-profile-icon">👤</div>
+                <div class="profile-dropdown">
+                    <a href="informacion.html" class="profile-dropdown-item">
+                        <span>👤 Mi Perfil</span>
+                    </a>
+                    <button id="logout-btn" class="profile-dropdown-item">
+                        <span>🚪 Cerrar sesión</span>
+                    </button>
+                </div>
+            </div>
+            
+
+            <div class="cart-icon-wrapper" id="openCartBtn">
+                <span class="cart-icon">🛒</span>
+                <span class="cart-badge" id="cartBadge" style="display: none;">0</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Producto -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal-content">
+            <img id="modalImage" class="modal-image" src="" alt="Producto">
+            <p class="modal-title" id="modalTitle"></p>
+            <p class="modal-price" id="modalPrice"></p>
+
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-buy" id="modalBuyBtn">Comprar</button>
+                <button class="modal-btn modal-btn-cart" id="modalAddCartBtn">Agregar al carrito</button>
+                <button class="modal-btn modal-btn-close" id="modalCloseBtn">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar Carrito -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="sidebar-header">
+            <h2 class="sidebar-title">Tu Carrito</h2>
+            <button class="sidebar-close" id="closeCartBtn">×</button>
+        </div>
+
+        <div class="sidebar-items" id="sidebarItems"></div>
+
+        <div class="sidebar-footer">
+            <div class="sidebar-total">
+                <span>Total:</span>
+                <span id="sidebarTotal">$0</span>
+            </div>
+            <button class="sidebar-checkout" id="checkoutBtn">Procesar Compra</button>
+
+        </div>
+    </div>
+
+    <!-- Sección de categorías -->
+    <div class="categories-section">
+        <div class="categories-tabs">
+            <div class="category-tab">
+                <h2><a class="id2" href="#perros">Perros</a></h2>
+            </div>
+            <div class="category-tab">
+                <h2><a class="id2" href="#gatos">Gatos</a></h2>
+            </div>
+        </div>
+
+        <div class="subcategories">
+            <a href="#comipe" class="subcategory-link">Comida</a>
+            <a href="#accepe" class="subcategory-link">Accesorios</a>
+            <a href="#medipe" class="subcategory-link">Medicamentos</a>
+            <a href="#comiga" class="subcategory-link">Comida</a>
+            <a href="#accega" class="subcategory-link">Accesorios</a>
+            <a href="#mediga" class="subcategory-link">Medicamentos</a>
+        </div>
+    </div>
+
+    <!-- Botón de categoría activa -->
+    <button id="perros" class="active-category-btn">Perros</button>
+    <button id="gatos" class="active-category-btn" style="display:none;">Gatos</button>
+
+
+
+    <!-- Separador -->
+    <div class="separator"></div>
+
+    <!-- Título de sección -->
+    <h2 id="comipe" class="section-title">comida</h2>
+
+    <!-- Productos -->
+    <div class="products-container">
+        <div class="products-grid">
+            <!-- Fila 1 -->
+            <div class="product-card">
+                <img src="https://m.media-amazon.com/images/I/61PNX8UYIJL._AC_UF1000,1000_QL80_.jpg" alt="Royal Canin Breed" class="product-image">
+                <p class="product-name">Royal Canin Breed Specific Razas Grandes</p>
+                <p class="product-price">$89.900</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://www.pedigree.es/cdn-cgi/image/width=600,height=600,f=auto,quality=90/sites/g/files/fnmzdf7926/files/2025-04/5043779_1701430544299.png" alt="Pedigree Adult" class="product-image">
+                <p class="product-name">Pedigree Adult Pollo y Vegetales</p>
+                <p class="product-price">$25.400</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://elsuper.com.co/rails/active_storage/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MTgyMDczNiwicHVyIjoiYmxvYl9pZCJ9fQ==--cb450870288f5961d94d5e3b2cdbb373a78049b7/7702521559175?locale=es" alt="Alpo Chunks" class="product-image">
+                <p class="product-name">Alpo Chunks Carne y Pollo</p>
+                <p class="product-price">$18.900</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://walmartsv.vtexassets.com/arquivos/ids/719296/42877_02.jpg?v=638799231049100000" alt="Dogui Premium" class="product-image">
+                <p class="product-name">Dogui Premium Adultos Sabor Natural</p>
+                <p class="product-price">$32.800</p>
+            </div>
+
+            <!-- Fila 2 -->
+            <div class="product-card">
+                <img src="https://purina.com.co/sites/default/files/styles/webp/public/2025-08/Razas_MyG_pro_plan_optiderma.png.webp?itok=C-iUgvSW" alt="Pro Plan Purina" class="product-image">
+                <p class="product-name">Pro Plan Purina Salmon y Arroz</p>
+                <p class="product-price">$45.600</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://dogcenter.uy/wp-content/uploads/2024/10/EQ-DOG-MED-ADULT-BEEF-8067-RIGHT-901x1024-1.png" alt="Equilibrio Adultos" class="product-image">
+                <p class="product-name">Equilibrio Adultos Carne Roja</p>
+                <p class="product-price">$38.500</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsfxFXSXIDDXeSkoQV9P_g9X1X-3_-0NhiRg&s  " alt="Eukanuba Performance" class="product-image">
+                <p class="product-name">Eukanuba Performance Pollo Premium</p>
+                <p class="product-price">$52.300</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://kamanpet.cl/wp-content/uploads/2025/03/focus-adulto.webp" alt="Drools Adultos" class="product-image">
+                <p class="product-name">Drools Adultos Carne Fresca</p>
+                <p class="product-price">$22.100</p>
+            </div>
+
+            <!-- Fila 3 -->
+            <div class="product-card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeIyRvwaxkF35B0lHZMZ9DL0U2ybTxNwcmmg&s" alt="Aca Adultos" class="product-image">
+                <p class="product-name">Aca Adultos Premium Beef and Rice</p>
+                <p class="product-price">$41.200</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://i.ebayimg.com/images/g/LucAAeSwwhFpb9st/s-l1200.webp" alt="Nutro Ultra" class="product-image">
+                <p class="product-name">Nutro Ultra Pollo y Verduras</p>
+                <p class="product-price">$48.700</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1cTPWRz3oykiZmviGE8cGjfVAodK2QPcDjA&s" alt="Sheba Mix" class="product-image">
+                <p class="product-name">Sheba Mix Sabores Variados</p>
+                <p class="product-price">$19.600</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://i.ebayimg.com/00/s/MTYwMFgxMjM3/z/BOUAAOSwgLFeWRof/$_57.JPG?set_id=8800005007" alt="Ken-L Ration" class="product-image">
+                <p class="product-name">Ken-L Ration Classic Meal</p>
+                <p class="product-price">$24.300</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Separador -->
+    <div class="separator"></div>
+
+    <!-- TÃ­tulo de secciÃ³n -->
+    <h2 id="accepe" class="section-title">Accesorios</h2>
+
+    <!-- Productos -->
+    <div class="products-container">
+        <div class="products-grid">
+            <!-- Fila 1 -->
+            <div class="product-card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnRt0wWd-2GkIowIE5IHxgdsTRX0w6R5C8jA&s" alt="Correa Ajustable" class="product-image">
+                <p class="product-name">Correa Ajustable de Nylon para Perros Medianos</p>
+                <p class="product-price">$24.990</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://m.media-amazon.com/images/I/71AlyYuhdBL._AC_UF1000,1000_QL80_.jpg" alt="Collar Perro" class="product-image">
+                <p class="product-name">Collar Reflectante con LED para Perros</p>
+                <p class="product-price">$45.800</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://http2.mlstatic.com/D_Q_NP_906936-MLU72065009339_102023-O.webp" alt="Cama Perro" class="product-image">
+                <p class="product-name">Cama OrtopÃ©dica para Perros Medianos</p>
+                <p class="product-price">$189.500</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDq29ovCP38L_LB0j-uqKUDuqnsn-I_1SoYg&s" alt="Juguete Pelota" class="product-image">
+                <p class="product-name">Juguete Pelota de Goma Resistente para Perros</p>
+                <p class="product-price">$18.900</p>
+            </div>
+
+            <!-- Fila 2 -->
+            <div class="product-card">
+                <img src="https://porelperro.s3.eu-west-3.amazonaws.com/wp-content/uploads/2021/05/12060103/Namsan-Flotador-bebedero-para-mascotas-automatico-bebedero-flotador-con-valvula.jpg" alt="Bebedero AutomÃ¡tico" class="product-image">
+                <p class="product-name">Bebedero AutomÃ¡tico para Perros de 2L</p>
+                <p class="product-price">$75.300</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-umB4KcrTyTnZdDIxpb2On0yZwo2RApjEvA&s" alt="Plato Comedero" class="product-image">
+                <p class="product-name">Plato Comedero Doble Antideslizante</p>
+                <p class="product-price">$32.800</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://http2.mlstatic.com/D_Q_NP_906655-MLU74438650073_022024-O.webp" alt="Cepillo Aseo" class="product-image">
+                <p class="product-name">Cepillo de Deslanador para Perros</p>
+                <p class="product-price">$58.900</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_610545-CBT91278779597_082025-O.webp" alt="Mochila Mascota" class="product-image">
+                <p class="product-name">Mochila Transportadora Ventilada para Perros</p>
+                <p class="product-price">$125.600</p>
+            </div>
+
+            <!-- Fila 3 -->
+            <div class="product-card">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_860715-MCO89288988512_082025-T.webp" alt="Abrigo Perro" class="product-image">
+                <p class="product-name">Abrigo TÃ©rmico para Perros PequeÃ±os y Medianos</p>
+                <p class="product-price">$62.400</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_944349-MLA99944834007_112025-O.webp" alt="Juguete Kong" class="product-image">
+                <p class="product-name">Juguete Kong Interactivo Rellenable</p>
+                <p class="product-price">$54.700</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://m.media-amazon.com/images/I/717KCG7zxuL._UF1000,1000_QL80_.jpg" alt="Pijama Mascota" class="product-image">
+                <p class="product-name">Pijama QuirÃºrgico RecuperaciÃ³n para Perros</p>
+                <p class="product-price">$89.900</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYUt3xzhjrJOn9Jfwiwlymh_RgmYZFeo98_A&s" alt="ArnÃ©s Perro" class="product-image">
+                <p class="product-name">ArnÃ©s de Seguridad para Viajes en Auto</p>
+                <p class="product-price">$71.500</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Separador -->
+    <div class="separator"></div>
+
+    <!-- TÃ­tulo de secciÃ³n -->
+    <h2 id="medipe" class="section-title">Medicamentos</h2>
+
+    <!-- Productos -->
+    <div class="products-container">
+        <div class="products-grid">
+            <!-- Fila 1 -->
+            <div class="product-card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRy0r3SX2Hi5ZYU6UnF7If03PogctiLj0nepQ&s" alt="Antipulgas Pipeta" class="product-image">
+                <p class="product-name">Antipulgas Pipeta Mensual para Perros</p>
+                <p class="product-price">$48.500</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://www.tierragro.com/cdn/shop/files/Caja-Canilaner-4_5_-_10-kg..jpg?v=1752070411&width=1200" alt="Desparasitante" class="product-image">
+                <p class="product-name">Desparasitante Oral para Perros 10kg</p>
+                <p class="product-price">$35.800</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSOGz10KtaKHuVfwUjFQOoKNChjmeutqu0-A&s" alt="Vitaminas Perro" class="product-image">
+                <p class="product-name">Complejo VitamÃ­nico para Perros Adultos</p>
+                <p class="product-price">$52.900</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://medicamentosmk.com/static/images/amoxicilina-mk.webp" alt="AntibiÃ³tico Tabletas" class="product-image">
+                <p class="product-name">AntibiÃ³tico Amoxicilina 250mg Tabletas</p>
+                <p class="product-price">$42.300</p>
+            </div>
+
+            <!-- Fila 2 -->
+            <div class="product-card">
+                <img src="https://animalscenter.com/272-large_default/saniderm-crema-x-40-g.jpg" alt="Pomada Heridas" class="product-image">
+                <p class="product-name">Pomada Cicatrizante para Heridas, perros</p>
+                <p class="product-price">$28.400</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZEwnXJtCUusTQpEUD6F_B0Vk2XnX-IJrdNw&s" alt="Gotas OftalmolÃ³gicas" class="product-image">
+                <p class="product-name">Gotas OftalmolÃ³gicas para Perros</p>
+                <p class="product-price">$39.600</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjLAf2yDH-dBYIE2lLj-MwvbxXNr-ba_wClg&s" alt="Shampoo Medicado" class="product-image">
+                <p class="product-name">Shampoo Medicado Antiparasitario 500ml</p>
+                <p class="product-price">$45.200</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNHBgwi_ZT-lGBgJZcKCbF6qOcFCUwXksmqg&s" alt="ProbiÃ³ticos" class="product-image">
+                <p class="product-name">ProbiÃ³ticos para Salud Digestiva</p>
+                <p class="product-price">$61.500</p>
+            </div>
+
+            <!-- Fila 3 -->
+            <div class="product-card">
+                <img src="https://animarket.net/wp-content/uploads/2022/05/CARPROVET-25-MG-CARPROFENO-PERROS-PRECIO-PERU%CC%81.jpg" alt="Antiinflamatorio" class="product-image">
+                <p class="product-name">Antiinflamatorio Carprofeno Tabletas</p>
+                <p class="product-price">$55.800</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3q6JwLtyfQLIT6yQUt7aJZioNOWysu2Vj1A&s" alt="Suplemento Articulaciones" class="product-image">
+                <p class="product-name">Suplemento para Articulaciones y Huesos</p>
+                <p class="product-price">$68.900</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTc0SwlFJN3jDutVWlvuMG7nWupJ6m75aCPvg&s" alt="Gotas Ã“ticas" class="product-image">
+                <p class="product-name">Gotas Ã“ticas Limpieza de OÃ­dos</p>
+                <p class="product-price">$38.700</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXelMzXgvmBCBUGqipsMWfj_5NjAUcwpJesw&s" alt="AnalgÃ©sico" class="product-image">
+                <p class="product-name">AnalgÃ©sico Paracetamol para Perros</p>
+                <p class="product-price">$32.100</p>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- BotÃ³n de categorÃ­a activa -->
+    <button id="gatos" class="active-category-btn">Gatos</button>
+
+    <!-- Separador -->
+    <div class="separator"></div>
+
+    <!-- TÃ­tulo de secciÃ³n -->
+    <h2 id="comiga" class="section-title">comida</h2>
+
+    <!-- Productos -->
+    <div class="products-container">
+        <div class="products-grid">
+            <!-- Fila 1 -->
+            <div class="product-card">
+                <img src="https://www.agrocampo.com.co/media/catalog/product/cache/d51e0dc10c379a6229d70d752fc46d83/9/1/912000066-v1-min.jpg" alt="Whiskas Adulto Pollo" class="product-image">
+                <p class="product-name">Whiskas Gatos Adultos Pollo y Carne</p>
+                <p class="product-price">de $15.990</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://www.agrocampo.com.co/media/catalog/product/cache/dd0974c17aa11c1008feb0c4f8e4080c/1/1/111103351_ed-min.jpg" alt="Purina Pro Plan Gato" class="product-image">
+                <p class="product-name">Purina Pro Plan Gatos Adultos SalmÃ³n</p>
+                <p class="product-price">de $32.500</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNfhJeJBD_1Z004lbLGBRr0jl7Ptn2pSzFQQ&s" alt="Felix Gato Adulto" class="product-image">
+                <p class="product-name">Felix Gatos Adultos Sabor ClÃ¡sico</p>
+                <p class="product-price">de $12.800</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://www.agrocampo.com.co/media/catalog/product/cache/d51e0dc10c379a6229d70d752fc46d83/1/1/111110648_ed-min_1.jpg" alt="Hill's Science Gato" class="product-image">
+                <p class="product-name">Hill's Science Diet Gatos Adultos</p>
+                <p class="product-price">de $48.900</p>
+            </div>
+
+            <!-- Fila 2 -->
+            <div class="product-card">
+                <img src="https://ceba.com.co/cdn/shop/files/00030111451033-cf-gs1.png?v=1721669983" alt="Royal Canin Gatito" class="product-image">
+                <p class="product-name">Royal Canin Gatitos 4 a 12 Meses</p>
+                <p class="product-price">$56.800</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://m.media-amazon.com/images/I/81dtr-5zbvL._AC_UF1000,1000_QL80_.jpg" alt="Iams Gato Castrado" class="product-image">
+                <p class="product-name">Iams Gatos Castrados Interior</p>
+                <p class="product-price">de $28.600</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSarGPOrICAW8rzXUBr4u5l6t7WMpYYaqivWQ&s" alt="Friskies Gato" class="product-image">
+                <p class="product-name">Friskies Gatos Adultos Variedad</p>
+                <p class="product-price">de $16.200</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtn8LLN1REAXGz2MuGmGTCmiiQ_2ybXH72JA&s" alt="Sheba Gato Premium" class="product-image">
+                <p class="product-name">Sheba Gatos Adultos HÃ­gado y Pollo</p>
+                <p class="product-price">de $19.500</p>
+            </div>
+
+            <!-- Fila 3 -->
+            <div class="product-card">
+                <img src="https://www.purina.com/sites/default/files/products/2023-10/fancy-feast-classic-broths-chicken-vegetables.png" alt="Fancy Feast Gato" class="product-image">
+                <p class="product-name">Fancy Feast Gatos Pollo y Vegetales</p>
+                <p class="product-price">$24.300</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeEH2xxpKpEh2tLqhP2tVsMK9XWM8EtwXjTQ&s" alt="9Lives Gato" class="product-image">
+                <p class="product-name">Lives Gatos Adultos Sabor ClÃ¡sico</p>
+                <p class="product-price">$14.800</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPaKZ6SAwwIkT0CQzqmcvs0O2mVvYKEfQq0w&s" alt="Meow Mix Gato" class="product-image">
+                <p class="product-name">Meow Mix Gatos Adultos Variado</p>
+                <p class="product-price">$20.100</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://yarangapet.com/wp-content/uploads/2025/04/Comida-para-Gatos-FRISKIES-Adultos-7-Proteinas-Seleccion-Especial-Bolsa-yarangapet.jpg" alt="Friskies Buffet" class="product-image">
+                <p class="product-name">Friskies Buffet Carnes Seleccionadas</p>
+                <p class="product-price">$18.700</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Separador -->
+    <div class="separator"></div>
+
+    <!-- TÃ­tulo de secciÃ³n -->
+    <h2 id="accega" class="section-title">Accesorios</h2>
+
+    <!-- Productos -->
+    <div class="products-container">
+        <div class="products-grid">
+            <!-- Fila 1 -->
+            <div class="product-card">
+                <img src="https://cdnx.jumpseller.com/gato-felix/image/69796512/imgi_7_D_NQ_NP_959970-MCO96892401878_112025-F.jpg?1763482070" alt="Arenero Gato" class="product-image">
+                <p class="product-name">Arenero Cerrado para Gatos con Filtro</p>
+                <p class="product-price">$89.900</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_755312-MLU73386570057_122023-O.webp" alt="Rascador Gato" class="product-image">
+                <p class="product-name">Rascador Ãrbol para Gatos 3 Niveles</p>
+                <p class="product-price">$156.200</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://img.kwcdn.com/product/fancy/934cbad5-1a87-4e9e-9bb9-e825c40e86e4.jpg?imageMogr2/auto-orient%7CimageView2/2/w/800/q/70/format/webp" alt="Cama Gato" class="product-image">
+                <p class="product-name">Cama Acogedora para Gatos PequeÃ±os</p>
+                <p class="product-price">$62.500</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://m.media-amazon.com/images/I/71E5OUEMyRL._AC_SL500_.jpg" alt="Juguete Gato" class="product-image">
+                <p class="product-name">Juguete Interactivo RatÃ³n para Gatos</p>
+                <p class="product-price">$21.800</p>
+            </div>
+
+            <!-- Fila 2 -->
+            <div class="product-card">
+                <img src="https://tu360compras.bancolombia.com/508314-medium_default/new-product.jpg" alt="Bebedero Gato" class="product-image">
+                <p class="product-name">Fuente de Agua para Gatos AutomÃ¡tica</p>
+                <p class="product-price">$98.600</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://happypetsco.com/wp-content/uploads/2021/02/111135_a.jpg" alt="Plato Gato" class="product-image">
+                <p class="product-name">Plato Comedero de CerÃ¡mica para Gatos</p>
+                <p class="product-price">$28.900</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://down-co.img.susercontent.com/file/1df7d6feb0fe393f4b197e4cf7fa0320" alt="Cepillo Gato" class="product-image">
+                <p class="product-name">Cepillo de Metal para Aseo de Gatos</p>
+                <p class="product-price">$35.700</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://doctoracats.com.mx/wp-content/uploads/2022/06/Gato-en-transportadora-Dra-Cats.jpeg" alt="Transportadora Gato" class="product-image">
+                <p class="product-name">Transportadora RÃ­gida para Gatos</p>
+                <p class="product-price">$118.500</p>
+            </div>
+
+            <!-- Fila 3 -->
+            <div class="product-card">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_782049-MCO101033027505_122025-O.webp" alt="Collar Gato" class="product-image">
+                <p class="product-name">Collar Ajustable con Cascabel para Gatos</p>
+                <p class="product-price">$16.400</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_757314-CBT95581392851_102025-O.webp" alt="Juguete Plumas" class="product-image">
+                <p class="product-name">Juguete CaÃ±a con Plumas para Gatos</p>
+                <p class="product-price">$19.200</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_929143-MLA96675222955_102025-O.webp" alt="TÃºnel Gato" class="product-image">
+                <p class="product-name">TÃºnel Plegable de Juego para Gatos</p>
+                <p class="product-price">$45.800</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://orionshop.com.co/wp-content/uploads/2022/08/HAMACAS-NUEVA-COLECCION-2.png" alt="Hamaca Gato" class="product-image">
+                <p class="product-name">Hamaca de Ventana para Gatos Solarium</p>
+                <p class="product-price">$52.300</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Separador -->
+    <div class="separator"></div>
+
+    <!-- TÃ­tulo de secciÃ³n -->
+    <h2 id="mediga" class="section-title">Medicamentos</h2>
+
+    <!-- Productos -->
+    <div class="products-container">
+        <div class="products-grid">
+            <!-- Fila 1 -->
+            <div class="product-card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5ZoefyToUazxlRgOTAyBuM1FYfIesC-vm9w&s" alt="Antipulgas Gato" class="product-image">
+                <p class="product-name">Antipulgas Pipeta Mensual para Gatos</p>
+                <p class="product-price">$42.300</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhOMwaqIh-wVcmEyiWg0kOuufSuH1FenafSw&s" alt="Desparasitante Gato" class="product-image">
+                <p class="product-name">Desparasitante para Gatos Tabletas</p>
+                <p class="product-price">$31.200</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://static-shop.vivapets.com/media/catalog/product/cache/11fc96e7318a291175a0004e054be56e/m/u/multivitamin.jpg" alt="Vitaminas Gato" class="product-image">
+                <p class="product-name">MultivitamÃ­nicos para Gatos Pasta</p>
+                <p class="product-price">$48.700</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_kPbGNc2DEN2-mBIxO3pO-Kxqz0i7v5r2-Q&s" alt="AntibiÃ³tico Gato" class="product-image">
+                <p class="product-name">AntibiÃ³tico Amoxicilina para Gatos</p>
+                <p class="product-price">$38.900</p>
+            </div>
+
+            <!-- Fila 2 -->
+            <div class="product-card">
+                <img src="https://guaw.com/62051-home_default/stanvet-cicavet-gato-para-perros-gatos.jpg" alt="Pomada Heridas Gato" class="product-image">
+                <p class="product-name">Pomada Cicatrizante para Heridas Gatos</p>
+                <p class="product-price">$25.600</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://didopet.com/wp-content/uploads/2024/03/12750-didopet.com-OFTALMOSYN-GOTAS-10ML.png" alt="Gotas OftalmolÃ³gicas Gato" class="product-image">
+                <p class="product-name">Gotas OftalmolÃ³gicas para Gatos</p>
+                <p class="product-price">$36.400</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://ceba.com.co/cdn/shop/products/CHAMPUBASICPETGATO.jpg?v=1738848830" alt="Shampoo Medicado Gato" class="product-image">
+                <p class="product-name">Shampoo Medicado para Gatos 250ml</p>
+                <p class="product-price">$41.800</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://purina.com.co/sites/default/files/styles/webp/public/2023-11/PURINA_PP_VETERINARY_SUPPLEMENTS_FORTIFLORA_CAT.png.webp?itok=nfmTdz7i" alt="ProbiÃ³ticos Gato" class="product-image">
+                <p class="product-name">ProbiÃ³ticos Digestivos para Gatos</p>
+                <p class="product-price">$57.200</p>
+            </div>
+
+            <!-- Fila 3 -->
+            <div class="product-card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5qCt6xA_pmc0tza6WuY2u--RYiZ7ibP-Vag&s" alt="Antiinflamatorio Gato" class="product-image">
+                <p class="product-name">Antiinflamatorio Meloxicam para Gatos</p>
+                <p class="product-price">$50.100</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://mungos.co/wp-content/uploads/2022/09/Mungos_Cats_Mobility_1.webp" alt="Suplemento Articulaciones Gato" class="product-image">
+                <p class="product-name">Suplemento Articulaciones para Gatos</p>
+                <p class="product-price">$64.600</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://acdn-us.mitiendanube.com/stores/001/049/402/products/otolav-f5ea26da2ab378f51117164853791253-640-0.webp" alt="Gotas Ã“ticas Gato" class="product-image">
+                <p class="product-name">Gotas Ã“ticas para Limpieza Gatos</p>
+                <p class="product-price">$35.300</p>
+            </div>
+
+            <div class="product-card">
+                <img src="https://vetmasagro.com/wp-content/uploads/2021/09/QUINODIAR-60B-copia-jpg.webp" alt="Antidiarreico Gato" class="product-image">
+                <p class="product-name">Antidiarreico para Gatos SuspensiÃ³n</p>
+                <p class="product-price">$29.400</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- TODO lo demás queda igual hasta el footer y payment modal -->
+    <!-- (Aquí NO te pego todo otra vez porque es larguísimo) -->
+
+    <!-- Modal de Pago -->
+    <div class="payment-modal" id="paymentModal">
+        <div class="payment-modal-content">
+            <h1 class="payment-modal-title">Completar Compra</h1>
+
+            <div class="payment-summary" id="paymentSummary"></div>
+
+            <div class="payment-form-group">
+                <label for="direccionEnvio">Dirección de Envío *</label>
+                <input type="text" id="direccionEnvio" placeholder="Calle, número, apartamento, ciudad">
+            </div>
+
+            <div class="payment-form-group">
+                <label>Método de Pago *</label>
+
+                <div class="payment-methods">
+                    <button class="payment-method-btn active" data-method="tarjeta">💳 Tarjeta De Crédito</button>
+                    <button class="payment-method-btn" data-method="pse">🏦 PSE</button>
+                    <button class="payment-method-btn" data-method="nequi">📱 Nequi</button>
+                    <button class="payment-method-btn" data-method="efectivo">💵 Contra Entrega</button>
+                </div>
+            </div>
+
+            <div class="payment-buttons">
+                <button class="payment-btn payment-btn-secondary" id="cancelPaymentBtn">Cancelar</button>
+                <button class="payment-btn payment-btn-primary" id="confirmPaymentBtn">Confirmar Pago</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+// ==========================
+// VITALPET TIENDA - JS MINIMO
+// Modal + Carrito + Sidebar + Checkout
+// ==========================
+
+// Helpers
+const $ = (selector) => document.querySelector(selector);
+const $$ = (selector) => document.querySelectorAll(selector);
+
+// ==========================
+// ELEMENTOS PRINCIPALES
+// ==========================
+const modal = $("#modal");
+const modalImage = $("#modalImage");
+const modalTitle = $("#modalTitle");
+const modalPrice = $("#modalPrice");
+
+const modalBuyBtn = $("#modalBuyBtn");
+const modalAddCartBtn = $("#modalAddCartBtn");
+const modalCloseBtn = $("#modalCloseBtn");
+
+const cartSidebar = $("#cartSidebar");
+const openCartBtn = $("#openCartBtn");
+const closeCartBtn = $("#closeCartBtn");
+const sidebarItems = $("#sidebarItems");
+const sidebarTotal = $("#sidebarTotal");
+const cartBadge = $("#cartBadge");
+const checkoutBtn = $("#checkoutBtn");
+
+const navLogin = $("#nav-login");
+const userProfile = $("#user-profile");
+const logoutBtn = $("#logout-btn");
+
+// ==========================
+// ESTADO GLOBAL
+// ==========================
+let selectedProduct = null;
+
+// Carrito: [{ id, name, price, image, qty }]
+let cart = [];
+
+// ==========================
+// FUNCIONES DE PRECIO
+// ==========================
+function parsePrice(priceText) {
+  const clean = priceText
+    .replace(/\$/g, "")
+    .replace(/\./g, "")
+    .replace(/,/g, "")
+    .trim();
+
+  const num = Number(clean);
+  return isNaN(num) ? 0 : num;
+}
+
+function formatPrice(num) {
+  return "$" + Number(num).toLocaleString("es-CO");
+}
+
+// ==========================
+// MODAL
+// ==========================
+function openModal(product) {
+  selectedProduct = product;
+
+  modalImage.src = product.image;
+  modalTitle.textContent = product.name;
+  modalPrice.textContent = formatPrice(product.price);
+
+  modal.classList.add("active");
+}
+
+function closeModal() {
+  modal.classList.remove("active");
+  selectedProduct = null;
+}
+
+// ==========================
+// CARRITO
+// ==========================
+function addToCart(product) {
+  const found = cart.find((p) => p.id === product.id);
+
+  if (found) {
+    found.qty += 1;
+  } else {
+    cart.push({ ...product, qty: 1 });
+  }
+
+  updateCartUI();
+}
+
+function removeFromCart(productId) {
+  cart = cart.filter((p) => p.id !== productId);
+  updateCartUI();
+}
+
+function getCartTotal() {
+  return cart.reduce((acc, item) => acc + item.price * item.qty, 0);
+}
+
+function updateCartUI() {
+  sidebarItems.innerHTML = "";
+
+  if (cart.length === 0) {
+    sidebarItems.innerHTML = `<div class="sidebar-empty">Tu carrito está vacío 🐾</div>`;
+    sidebarTotal.textContent = formatPrice(0);
+    cartBadge.style.display = "none";
+    return;
+  }
+
+  cart.forEach((item) => {
+    const div = document.createElement("div");
+    div.className = "sidebar-item";
+
+    div.innerHTML = `
+      <img class="sidebar-item-image" src="${item.image}" alt="${item.name}">
+      <div class="sidebar-item-info">
+        <p class="sidebar-item-name">${item.name}</p>
+        <p class="sidebar-item-price">${formatPrice(item.price)} x ${item.qty}</p>
+      </div>
+      <button class="sidebar-item-remove" title="Eliminar">✖</button>
+    `;
+
+    div.querySelector(".sidebar-item-remove").addEventListener("click", () => {
+      removeFromCart(item.id);
+    });
+
+    sidebarItems.appendChild(div);
+  });
+
+  sidebarTotal.textContent = formatPrice(getCartTotal());
+
+  const totalItems = cart.reduce((acc, item) => acc + item.qty, 0);
+  cartBadge.textContent = totalItems;
+  cartBadge.style.display = "flex";
+}
+
+// ==========================
+// SIDEBAR
+// ==========================
+function openCart() {
+  cartSidebar.classList.add("active");
+}
+
+function closeCart() {
+  cartSidebar.classList.remove("active");
+}
+
+// ==========================
+// LOGIN FALSO (solo front)
+// ==========================
+function checkFakeLogin() {
+  const logged = localStorage.getItem("vitalpet_logged") === "true";
+
+  if (logged) {
+    navLogin.style.display = "none";
+    userProfile.style.display = "flex";
+  } else {
+    navLogin.style.display = "inline-block";
+    userProfile.style.display = "none";
+  }
+}
+
+function logout() {
+  localStorage.setItem("vitalpet_logged", "false");
+  checkFakeLogin();
+  alert("Sesión cerrada.");
+}
+
+// ==========================
+// DROPDOWN PERFIL
+// ==========================
+function initProfileDropdown() {
+  const icon = userProfile?.querySelector(".user-profile-icon");
+  const dropdown = userProfile?.querySelector(".profile-dropdown");
+
+  if (!icon || !dropdown) return;
+
+  icon.addEventListener("click", (e) => {
+    e.stopPropagation();
+    dropdown.classList.toggle("active");
+  });
+
+  document.addEventListener("click", () => {
+    dropdown.classList.remove("active");
+  });
+}
+
+// ==========================
+// CAPTURAR PRODUCTOS DEL HTML
+// ==========================
+function initProducts() {
+  const cards = $$(".product-card");
+
+  cards.forEach((card, index) => {
+    const img = card.querySelector("img");
+    const nameEl = card.querySelector(".product-name");
+    const priceEl = card.querySelector(".product-price");
+
+    if (!img || !nameEl || !priceEl) return;
+
+    const product = {
+      id: index + 1,
+      name: nameEl.textContent.trim(),
+      price: parsePrice(priceEl.textContent),
+      image: img.getAttribute("src"),
+    };
+
+    card.addEventListener("click", () => {
+      openModal(product);
+    });
+  });
+}
+
+// ==========================
+// EVENTOS MODAL
+// ==========================
+modalCloseBtn.addEventListener("click", closeModal);
+
+modal.addEventListener("click", (e) => {
+  if (e.target === modal) closeModal();
+});
+
+modalAddCartBtn.addEventListener("click", () => {
+  if (!selectedProduct) return;
+  addToCart(selectedProduct);
+  alert("Producto agregado al carrito 🛒");
+});
+
+modalBuyBtn.addEventListener("click", () => {
+  if (!selectedProduct) return;
+  addToCart(selectedProduct);
+  openCart();
+  closeModal();
+});
+
+// ==========================
+// EVENTOS SIDEBAR
+// ==========================
+openCartBtn.addEventListener("click", openCart);
+closeCartBtn.addEventListener("click", closeCart);
+
+// ==========================
+// EVENTOS CHECKOUT
+// ==========================
+checkoutBtn.addEventListener("click", () => {
+  if (cart.length === 0) {
+    alert("Tu carrito está vacío.");
+    return;
+  }
+
+  localStorage.setItem("vitalpet_cart", JSON.stringify(cart));
+  window.location.href = "checkout.html";
+});
+
+// ==========================
+// LOGOUT
+// ==========================
+logoutBtn?.addEventListener("click", logout);
+
+// ==========================
+// INIT
+// ==========================
+initProducts();
+updateCartUI();
+checkFakeLogin();
+initProfileDropdown();
+</script>
+
+
+</html>

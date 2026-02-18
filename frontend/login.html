@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VitalPet - Iniciar Sesión</title>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(to bottom, #d4f1f4 0%, #e8f8f9 100%);
+      min-height: 100vh;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Contenedor */
+    .container {
+      width: 100%;
+      max-width: 460px;
+      background: white;
+      border-radius: 22px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Flecha */
+    .back-arrow {
+      position: absolute;
+      left: 15px;
+      top: 80px;
+      width: 42px;
+      height: 42px;
+      background: #1e3a5f;
+      border: none;
+      border-radius: 50%;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: 0.2s;
+      z-index: 10;
+    }
+
+    .back-arrow:hover {
+      transform: scale(1.05);
+      background: #162b46;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      background: #f5f5f5;
+      border-bottom: 2px solid #1e3a5f;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 14px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 700;
+      color: #666;
+      transition: 0.2s;
+    }
+
+    .tab-btn.active {
+      background: white;
+      color: #1e3a5f;
+    }
+
+    /* Contenido */
+    .content {
+      display: none;
+      padding: 35px 35px 40px;
+    }
+
+    .content.active {
+      display: block;
+    }
+
+    .logo {
+      width: 65px;
+      height: 65px;
+      background: #1e3a5f;
+      border-radius: 50%;
+      margin: 0 auto 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 34px;
+      color: white;
+    }
+
+    h2 {
+      font-size: 24px;
+      color: #1e3a5f;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #777;
+      font-size: 13px;
+      margin-bottom: 22px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      color: #333;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      font-size: 14px;
+      transition: 0.2s;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: #1e3a5f;
+      box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.12);
+    }
+
+    /* Password */
+    .password-wrapper {
+      position: relative;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 12px;
+      top: 39px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      color: #777;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .toggle-password:hover {
+      color: #1e3a5f;
+    }
+
+    /* Checkbox */
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 14px 0 18px;
+      font-size: 13px;
+      color: #444;
+    }
+
+    .checkbox-group input {
+      width: auto;
+    }
+
+    /* Botón principal */
+    button[type="submit"] {
+      width: 100%;
+      padding: 14px;
+      background: #ff6b35;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button[type="submit"]:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(255, 107, 53, 0.25);
+    }
+
+    .footer-text {
+      text-align: center;
+      margin-top: 14px;
+      font-size: 13px;
+      color: #777;
+    }
+
+    .link {
+      color: #1e3a5f;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .link:hover {
+      text-decoration: underline;
+    }
+
+    /* Badge admin */
+    .admin-badge {
+      background: #f4c430;
+      color: #333;
+      padding: 3px 10px;
+      border-radius: 14px;
+      font-size: 11px;
+      font-weight: 800;
+      margin-left: 8px;
+    }
+
+    @media (max-width: 520px) {
+      .content {
+        padding: 28px 22px 32px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <a href="inicio.html" class="back-arrow" title="Volver al inicio">←</a>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="login">🔑 Iniciar Sesión</button>
+      <button class="tab-btn" data-tab="admin">🧑‍⚕️ Admin</button>
+      <button class="tab-btn" data-tab="register">✨ Registrarse</button>
+    </div>
+
+    <!-- TAB 1: LOGIN -->
+    <div class="content active" id="tab-login">
+      <div class="logo">🐶</div>
+      <h2>¡Bienvenido!</h2>
+      <p class="subtitle">Inicia sesión para cuidar a tus mascotas</p>
+
+      <form id="form-login">
+        <div class="form-group">
+          <label for="login-email">Correo Electrónico</label>
+          <input id="login-email" name="email" type="email" required placeholder="tu@email.com">
+        </div>
+
+        <div class="form-group">
+          <label for="login-password">Contraseña</label>
+          <div class="password-wrapper">
+            <input id="login-password" name="password" type="password" required placeholder="••••••••">
+            <button type="button" class="toggle-password" data-target="login-password">👁️</button>
+          </div>
+        </div>
+
+        <div class="checkbox-group">
+          <input type="checkbox" id="remember" name="remember">
+          <label for="remember">Recordarme</label>
+        </div>
+
+        <button type="submit">Iniciar Sesión</button>
+
+        <p class="footer-text">
+          ¿Olvidaste tu contraseña? <a href="#" class="link">Recupérala aquí</a>
+        </p>
+      </form>
+    </div>
+
+    <!-- TAB 2: ADMIN -->
+    <div class="content" id="tab-admin">
+      <div class="logo">🧑‍⚕️</div>
+      <h2>Panel Admin <span class="admin-badge">ADMIN</span></h2>
+      <p class="subtitle">Acceso para personal veterinario</p>
+
+      <form id="form-admin">
+        <div class="form-group">
+          <label for="admin-email">Correo Corporativo</label>
+          <input id="admin-email" name="email" type="email" required placeholder="admin@vitalpet.com">
+        </div>
+
+        <div class="form-group">
+          <label for="admin-password">Contraseña</label>
+          <div class="password-wrapper">
+            <input id="admin-password" name="password" type="password" required placeholder="••••••••">
+            <button type="button" class="toggle-password" data-target="admin-password">👁️</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="admin-role">Rol</label>
+          <select id="admin-role" name="role" required>
+            <option value="" selected disabled>Selecciona tu rol</option>
+            <option value="veterinario">Veterinario</option>
+            <option value="asistente">Asistente</option>
+            <option value="recepcion">Recepción</option>
+          </select>
+        </div>
+
+        <button type="submit">Acceder al Panel</button>
+
+        <p class="footer-text">Acceso restringido. Solo personal autorizado.</p>
+      </form>
+    </div>
+
+    <!-- TAB 3: REGISTRO -->
+    <div class="content" id="tab-register">
+      <div class="logo">🐱</div>
+      <h2>Crear Cuenta</h2>
+      <p class="subtitle">Únete y cuida a tus mascotas</p>
+
+      <form id="form-register">
+        <div class="form-group">
+          <label for="reg-name">Nombre Completo</label>
+          <input id="reg-name" name="name" type="text" required placeholder="Juan Pérez">
+        </div>
+
+        <div class="form-group">
+          <label for="reg-email">Correo Electrónico</label>
+          <input id="reg-email" name="email" type="email" required placeholder="tu@email.com">
+        </div>
+
+        <div class="form-group">
+          <label for="reg-phone">Teléfono</label>
+          <input id="reg-phone" name="phone" type="tel" required placeholder="+57 300 123 4567">
+        </div>
+
+        <div class="form-group">
+          <label for="reg-password">Contraseña</label>
+          <div class="password-wrapper">
+            <input id="reg-password" name="password" type="password" required minlength="6" placeholder="••••••••">
+            <button type="button" class="toggle-password" data-target="reg-password">👁️</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="reg-confirm">Confirmar Contraseña</label>
+          <div class="password-wrapper">
+            <input id="reg-confirm" name="confirm_password" type="password" required minlength="6" placeholder="••••••••">
+            <button type="button" class="toggle-password" data-target="reg-confirm">👁️</button>
+          </div>
+        </div>
+
+        <div class="checkbox-group">
+          <input type="checkbox" required id="terms" name="terms">
+          <label for="terms">Acepto <a href="#" class="link">términos y condiciones</a></label>
+        </div>
+
+        <button type="submit">Crear Mi Cuenta</button>
+
+        <p class="footer-text">
+          ¿Ya tienes cuenta? <a href="#" class="link" id="go-login">Inicia sesión aquí</a>
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <!-- JS MÍNIMO (solo tabs + ver contraseña) -->
+  <script>
+    // Tabs
+    const tabButtons = document.querySelectorAll(".tab-btn");
+    const contents = {
+      login: document.getElementById("tab-login"),
+      admin: document.getElementById("tab-admin"),
+      register: document.getElementById("tab-register"),
+    };
+
+    tabButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        tabButtons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        Object.values(contents).forEach(c => c.classList.remove("active"));
+        contents[btn.dataset.tab].classList.add("active");
+      });
+    });
+
+    // Botón para ir al login desde registro
+    document.getElementById("go-login").addEventListener("click", (e) => {
+      e.preventDefault();
+      document.querySelector('[data-tab="login"]').click();
+    });
+
+    // Toggle password
+    document.querySelectorAll(".toggle-password").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const input = document.getElementById(btn.dataset.target);
+        input.type = input.type === "password" ? "text" : "password";
+      });
+    });
+  </script>
+</body>
+</html>
